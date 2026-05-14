@@ -1,6 +1,6 @@
 const userService = require('../services/User.service');
 exports.registerUser = async (req, res) => {
-    console.log('Register called with body:', req.body);
+    // console.log('Register called with body:', req.body);
     try {
         const user = await userService.registerUser(req.body);
         res.status(201).json({
