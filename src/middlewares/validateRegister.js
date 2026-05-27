@@ -25,7 +25,7 @@ const validateRegister = [
         .notEmpty()
         .withMessage('Phone number is required')
         .isMobilePhone('vi-VN'),
-    
+
     // handel errors
     (req, res, next) => {
         const errors = validationResult(req);

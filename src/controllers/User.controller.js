@@ -1,30 +1,32 @@
-const userService = require('../services/User.service');
-exports.registerUser = async (req, res) => {
-    // console.log('Register called with body:', req.body);
+const User = require('../models/User.model');
+
+exports.getAllUsers = async (req, res) => {
     try {
-        const user = await userService.registerUser(req.body);
-        res.status(201).json({
+        const users = await User.find();
+        
+        res.status(200).json({
             success: true,
-            message: 'User registered successfully',
-            data: user
+            message: 'Users retrieved successfully',
+            data: users
         });
     } catch (error) {
-        console.log('Error:', error.message);
         res.status(500).json({ message: error.message });
     }
 }
 
-exports.LoginUser = async (req, res) => {
-    const { email, password } = req.body;
+exports.DeleteUser = async (req, res) => {
     try {
-        const user = await userService.LoginUser(email, password);
+        const { id } = req.params;
+        const user = await User.findByIdAndDelete(id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
         res.status(200).json({
             success: true,
-            message: 'User logged in successfully',
+            message: 'User deleted successfully',
             data: user
         });
     } catch (error) {
-        console.log('Error:', error.message);
         res.status(500).json({ message: error.message });
     }
 }
