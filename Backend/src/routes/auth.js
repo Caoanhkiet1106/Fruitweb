@@ -6,5 +6,5 @@ const validateRegister = require('../middlewares/validateRegister');
 router.post('/register', validateRegister, authController.registerUser);
 // User login route
 router.post('/login', authController.LoginUser);
-
+router.post('/refresh', authController.reqRefreshtoken);
 module.exports = router;
