@@ -2,7 +2,13 @@ const jwt = require("jsonwebtoken")
 
 exports.verifyToken = async (req,res,next) => {
     //verify token 
-    const authHeader = req.headers.authorization
+    let authHeader = req.headers.authorization
+    
+    // Check query parameter if header is not provided
+    if(!authHeader && req.query.authorization){
+        authHeader = req.query.authorization
+    }
+    
     if(authHeader){
         const accesstoken = authHeader.split(" ")[1];
         jwt.verify(accesstoken,process.env.JWT_ACCESS_KEY,(err,user)=>{
@@ -17,7 +23,13 @@ exports.verifyToken = async (req,res,next) => {
     }
 }
 exports.verifyUserOrAdmin = async (req,res,next) => {
-    const authHeader = req.headers.authorization
+    let authHeader = req.headers.authorization
+    
+    // Check query parameter if header is not provided
+    if(!authHeader && req.query.authorization){
+        authHeader = req.query.authorization
+    }
+    
     if(!authHeader){
         return res.status(401).json("You're not authenticated")
     }

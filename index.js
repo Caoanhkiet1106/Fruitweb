@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 dotenv.config({ path: `${__dirname}/.env` });
 const apiRoutes = require('./src/routes/auth');
 const userRoutes = require('./src/routes/user');
+const cookieParser = require("cookie-parser");
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -11,6 +13,9 @@ const port = process.env.PORT || 3000;
 connectDB();
 
 app.use(express.json());
+app.use(cookieParser());
+
+
 
 app.use('/v1/auth', apiRoutes);
 app.use('/v1/user', userRoutes)
